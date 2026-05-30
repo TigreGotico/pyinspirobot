@@ -1,9 +1,0 @@
-LICENSE
-README.md
-setup.py
-pyinspirobot/__init__.py
-pyinspirobot.egg-info/PKG-INFO
-pyinspirobot.egg-info/SOURCES.txt
-pyinspirobot.egg-info/dependency_links.txt
-pyinspirobot.egg-info/requires.txt
-pyinspirobot.egg-info/top_level.txt
