@@ -1,9 +1,11 @@
 # InspiroBot API Reference
 
 ## Overview
-InspiroBot (https://inspirobot.me/) is an artificial intelligence that generates unique inspirational quotes. Through reverse engineering, we've identified the core API endpoint used to generate these images.
+
+[InspiroBot](https://inspirobot.me/) is a service that generates inspirational quote images. This reference describes the API endpoint that the service uses to generate these images.
 
 ## Base URL
+
 ```
 https://inspirobot.me/api/
 ```
@@ -11,80 +13,91 @@ https://inspirobot.me/api/
 ## Endpoints
 
 ### Generate Image
+
 **GET** `/api/`
 
-Returns a direct URL to a generated inspirational image.
+Returns a direct URL to a generated image.
 
 #### Query Parameters
-- `generate` (required): Must be set to `"true"`
-- `season` (optional): Set to `"xmas"` for Christmas-themed images
+
+- `generate` (required): Set to `"true"`.
+- `season` (optional): Set to `"xmas"` for a Christmas-themed image.
 
 #### Response
+
 - **Content-Type**: `text/plain`
-- **Body**: A URL string pointing to the generated image (typically a JPEG)
+- **Body**: A URL string that points to the generated image (typically a JPEG).
 
 #### Example Request
+
 ```
 GET https://inspirobot.me/api/?generate=true
 ```
 
 #### Example Response
+
 ```
 https://generated.inspirobot.me/a/abcde12345.jpg
 ```
 
 #### Example with Season
+
 ```
 GET https://inspirobot.me/api/?generate=true&season=xmas
 ```
 
 #### Example Response
+
 ```
 https://generated.xmascardbot.com/xmas010/aXm1179xjU.jpg
 ```
 
 ## Image URLs
+
 The generated image URLs follow these patterns:
+
 - Standard: `https://generated.inspirobot.me/a/[ID].jpg`
 - Christmas: `https://generated.xmascardbot.com/xmas[ID]/[ID].jpg`
 
-Where `[ID]` is a unique identifier string.
+`[ID]` is a unique identifier string.
 
 ## Direct Image Access
-Once you have the image URL from the API, you can directly access the image data:
+
+Once you have the image URL from the API, you can access the image data directly:
+
 ```
 GET https://generated.inspirobot.me/a/abcde12345.jpg
 ```
-Returns the binary image data with appropriate `Content-Type` header (usually `image/jpeg`).
 
-## Rate Limiting & Usage
-InspiroBot does not appear to have strict rate limiting for personal use, but please:
-- Use reasonable request frequencies
-- Consider caching results when appropriate
-- Respect the service and its intended purpose
-- Do not use for commercial purposes without permission
+This returns the binary image data with a `Content-Type` header, usually `image/jpeg`.
+
+## Rate Limiting and Usage
+
+InspiroBot does not enforce strict rate limiting for personal use. Use reasonable request frequencies, cache results when you can, and do not use the service for commercial purposes without permission.
 
 ## Technical Notes
-- The service appears to run on multiple servers/regions
-- Images are hosted on AWS S3-like storage (generated.inspirobot.me)
-- Christmas images may be served from a different domain (generated.xmascardbot.com)
-- The API does not require authentication
-- Image generation appears to be truly random/unique each time
+
+- The service runs on multiple servers or regions.
+- Images are hosted on AWS S3-like storage (`generated.inspirobot.me`).
+- Christmas images may come from a different domain (`generated.xmascardbot.com`).
+- The API does not require authentication.
+- Each generated image is unique.
 
 ## Error Handling
-If the service is unavailable or experiencing issues:
-- HTTP status codes may vary (503, 500, etc.)
-- Response body may contain error messages
-- Implement retry logic with exponential backoff for production use
 
-## Related Endpoints (Discovered but not confirmed for public use)
-During reverse engineering, these endpoints were observed in the JavaScript but may not be part of the public API:
-- `/share?iuid=[ID]` - Used for sharing generated images
+If the service is unavailable, the HTTP status code may vary (503, 500, or others) and the response body may contain an error message. For production use, add retry logic with exponential backoff.
+
+## Related Endpoints
+
+These endpoints appear in the service's JavaScript but are not confirmed as public API:
+
+- `/share?iuid=[ID]` — used for sharing generated images
 - Various asset endpoints for CSS, JS, and images
 
-These are not recommended for use as they may change without notice.
+Do not rely on these endpoints. They may change without notice.
 
 ## Example Usage in Python
+
 ```python
 import requests
 

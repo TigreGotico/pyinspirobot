@@ -1,6 +1,6 @@
 # PyInspiroBot
 
-A Python package to interact with InspiroBot (https://inspirobot.me/).
+PyInspiroBot is a Python package for [InspiroBot](https://inspirobot.me/), a service that generates inspirational quote images. The package wraps the InspiroBot API and returns an image URL or the raw image data.
 
 ## Installation
 
@@ -42,6 +42,8 @@ img_data = get_image()
 
 - `get_image_url(season: Optional[str] = None) -> str`
 - `get_image(season: Optional[str] = None) -> bytes`
+
+See [docs/API_REFERENCE.md](docs/API_REFERENCE.md) for the InspiroBot API endpoint that this package uses.
 
 ## License
 
