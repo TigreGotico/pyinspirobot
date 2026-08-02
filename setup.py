@@ -11,7 +11,7 @@ setup(
     description="A Python package to interact with InspiroBot (https://inspirobot.me/)",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/pyinspirobot",
+    url="https://github.com/LeMetadatarr/pyinspirobot",
     packages=find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
