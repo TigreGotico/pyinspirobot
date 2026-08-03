@@ -19,13 +19,16 @@ Example usage:
 """
 
 import requests
-from typing import Optional, Union
+from typing import Optional
+
+DEFAULT_TIMEOUT = 10
 
 class InspiroBot:
     """Main class to interact with InspiroBot."""
 
-    def __init__(self):
+    def __init__(self, timeout: float = DEFAULT_TIMEOUT):
         self.base_url = "https://inspirobot.me/api/"
+        self.timeout = timeout
 
     def get_image_url(self, season: Optional[str] = None) -> str:
         """
@@ -39,12 +42,13 @@ class InspiroBot:
 
         Raises:
             requests.RequestException: If the request fails.
+            ValueError: If the response body is not a usable image URL.
         """
         params = {'generate': 'true'}
         if season:
             params['season'] = season
 
-        response = requests.get(self.base_url, params=params)
+        response = requests.get(self.base_url, params=params, timeout=self.timeout)
         response.raise_for_status()
         image_url = response.text.strip()
 
@@ -53,6 +57,11 @@ class InspiroBot:
             image_url = 'https:' + image_url
         elif image_url.startswith('/'):
             image_url = 'https://inspirobot.me' + image_url
+
+        if not image_url.startswith(('http://', 'https://')):
+            raise ValueError(
+                f"InspiroBot returned an unusable response: {image_url!r}"
+            )
 
         return image_url
 
@@ -68,9 +77,10 @@ class InspiroBot:
 
         Raises:
             requests.RequestException: If any of the requests fail.
+            ValueError: If the response body is not a usable image URL.
         """
         image_url = self.get_image_url(season=season)
-        image_response = requests.get(image_url)
+        image_response = requests.get(image_url, timeout=self.timeout)
         image_response.raise_for_status()
         return image_response.content
 
