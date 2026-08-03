@@ -35,8 +35,12 @@ img_data = get_image()
 
 ### InspiroBot
 
+- `InspiroBot(timeout: float = 10)` — `timeout` bounds every HTTP request, in seconds.
 - `get_image_url(season: Optional[str] = None) -> str`
 - `get_image(season: Optional[str] = None) -> bytes`
+
+Both methods raise `requests.RequestException` on a failed request and `ValueError`
+if InspiroBot returns a response that is not a usable image URL.
 
 ### Convenience functions
 
